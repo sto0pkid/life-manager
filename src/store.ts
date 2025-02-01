@@ -1,8 +1,8 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from './features/counter/counterSlice'
-import budgetReducer from './features/budget/budgetSlice'
-//import billsReducer from './features/bills/billsSlice'
+//import budgetReducer from './features/budget/budgetSlice'
+import { budgetApi } from './features/budget/budgetAPI'
 import { billsApi } from './features/bills/billsAPI'
 import revenuesReducer from './features/revenues/revenuesSlice'
 import healthReducer from './features/health/healthSlice'
@@ -16,8 +16,7 @@ import jobLeadsReducer from './features/jobLeads/jobLeadsSlice'
 const store = configureStore({
   reducer: {
     counter: counterReducer,
-    budget: budgetReducer,
-    //bills: billsReducer,
+    [budgetApi.reducerPath]: budgetApi.reducer,
     [billsApi.reducerPath]: billsApi.reducer,
     revenues: revenuesReducer,
     health: healthReducer,
@@ -29,7 +28,10 @@ const store = configureStore({
     jobLeads: jobLeadsReducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(billsApi.middleware),
+    getDefaultMiddleware().concat(
+      billsApi.middleware,
+      budgetApi.middleware
+    )
 })
 
 export default store

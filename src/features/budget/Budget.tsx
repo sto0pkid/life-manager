@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 
-import { useSelector, useDispatch} from 'react-redux'
-import { setIncome, setExpenses } from './budgetSlice'
-import { RootState } from '../../store'; // Import your Redux store's root state type
-
-
+import {
+    useGetBudgetQuery,
+    useSetBudgetMutation
+} from './budgetAPI'
 
 const Budget: React.FC = () => {
-    const {income, expenses} = useSelector((state : RootState) => state.budget)
-    const dispatch = useDispatch()
-    //const [income, setIncome] = useState<number>(0);
-    //const [expenses, setExpenses] = useState<number>(0);
-    const [savings, setSavings] = useState<number>(0);
+    const { data: budget } = useGetBudgetQuery();
+
+    const [ setBudget ] = useSetBudgetMutation();
+
+    const [formIncome, setFormIncome] = useState(budget?.income || 0);
+    const [formExpenses, setFormExpenses] = useState(budget?.expenses || 0);
 
     const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setIncome(Number(e.target.value)));
+        setFormIncome(Number(e.target.value));
     };
 
     const handleExpensesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setExpenses(Number(e.target.value)));
+        setFormExpenses(Number(e.target.value));
     };
 
-    const calculateSavings = () => {
-        setSavings(income - expenses);
+    const handleSave = () => {
+        setBudget({ income: formIncome, expenses: formExpenses })
     };
 
     return (
@@ -31,17 +31,19 @@ const Budget: React.FC = () => {
             <div>
                 <label>
                     Income:
-                    <input type="number" value={income} onChange={handleIncomeChange} />
+                    <input type="number" value={formIncome} onChange={handleIncomeChange} />
                 </label>
             </div>
             <div>
                 <label>
                     Expenses:
-                    <input type="number" value={expenses} onChange={handleExpensesChange} />
+                    <input type="number" value={formExpenses} onChange={handleExpensesChange} />
                 </label>
             </div>
-            <button onClick={calculateSavings}>Calculate Savings</button>
-            <h3>Savings: {savings}</h3>
+            <div>
+                <button onClick={handleSave}>Save Budget</button>
+            </div>
+            <h3>Savings: {formIncome - formExpenses}</h3>
         </div>
     );
 };
