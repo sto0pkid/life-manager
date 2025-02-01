@@ -1,0 +1,25 @@
+{
+    "bills": {
+        "id1": {
+            "id": "id1",
+            "name": "Electricity",
+            "amount": 100,
+            "dueDate": "2023-10-15",
+            "paid": false
+        },
+        "id2": {
+            "id": "id2",
+            "name": "Water",
+            "amount": 50,
+            "dueDate": "2023-10-20",
+            "paid": true
+        },
+        "id3":{
+            "id": "id3",
+            "name": "Internet",
+            "amount": 60,
+            "dueDate": "2023-10-25",
+            "paid": false
+        }
+    }
+}
