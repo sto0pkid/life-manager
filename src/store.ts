@@ -1,7 +1,5 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './features/counter/counterSlice'
-//import budgetReducer from './features/budget/budgetSlice'
 import { budgetApi } from './features/budget/budgetAPI'
 import { billsApi } from './features/bills/billsAPI'
 import revenuesReducer from './features/revenues/revenuesSlice'
@@ -15,7 +13,6 @@ import jobLeadsReducer from './features/jobLeads/jobLeadsSlice'
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
     [budgetApi.reducerPath]: budgetApi.reducer,
     [billsApi.reducerPath]: billsApi.reducer,
     revenues: revenuesReducer,

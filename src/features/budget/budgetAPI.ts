@@ -22,23 +22,6 @@ export const budgetApi = createApi({
                 body: budget,
             }),
             invalidatesTags: [{ type: 'Budget' }],
-        }),
-        setIncome: builder.mutation<void, number>({
-            // note: an optional `queryFn` may be used in place of `query`
-            query: (income) => ({
-                url: `/income`,
-                method: 'PUT',
-                body: {income},
-            }),
-            invalidatesTags: [{ type: 'Budget' }],
-        }),
-        setExpenses: builder.mutation<void, number>({
-            query: (expenses) => ({
-                url: `/expenses`,
-                method: 'PUT',
-                body: {expenses}
-            }),
-            invalidatesTags: [{ type: 'Budget' }],
         })
     })
 })
@@ -47,7 +30,5 @@ export const budgetApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
     useGetBudgetQuery,
-    useSetIncomeMutation,
-    useSetExpensesMutation,
     useSetBudgetMutation
 } = budgetApi

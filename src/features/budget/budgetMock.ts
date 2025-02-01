@@ -8,14 +8,9 @@ const budgetHandlers = (data : Data) => [
         await delay()
         return HttpResponse.json(data.budget)
     }),
-    http.put('/api/budget/income', async (req) => {
+    http.put('/api/budget', async (req) => {
         await delay()
-        data.budget.income = await req.request.json() as Budget['income']
-        return HttpResponse.json()
-    }),
-    http.put('/api/budget/expenses', async (req) => {
-        await delay()
-        data.budget.expenses = await req.request.json() as Budget['expenses']
+        data.budget = await req.request.json() as Budget
         return HttpResponse.json()
     })
 ]

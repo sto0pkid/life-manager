@@ -14,14 +14,12 @@ import Projection from './features/projection/Projection';
 import JobLeads from './features/jobLeads/JobLeads';
 import Jobs from './features/jobs/Jobs';
 import Meals from './features/meals/Meals';
-import Counter from './features/counter/Counter';
 
 
 const App: React.FC = () => {
     return (
         <div>
             <h1>Life Management System</h1>
-            <Counter />
             <Budget />
             <Bills />
             <Revenues />
