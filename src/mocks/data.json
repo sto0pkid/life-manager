@@ -57,5 +57,11 @@
             "id": "id1",
             "name": "Guitar"
         }
+    },
+    "events": {
+        "id1": {
+            "id": "id1",
+            "name": "Vacation"
+        }
     }
 }

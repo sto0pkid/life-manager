@@ -12,7 +12,6 @@ const billsHandlers = (data : Data) => [
     }),
     http.get('/api/bills/:id', async (req) => {
         await delay()
-        console.log('/api/bills/:id')
         const { params } = req
         const { id } = params
         if(typeof id === 'undefined'){
@@ -57,7 +56,6 @@ const billsHandlers = (data : Data) => [
     }),
     http.post('/api/bills', async (req) => {
         await delay()
-        console.log(`/api/bills`)
         const { request } = req
 
         const bill = await request.json() as Bill

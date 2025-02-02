@@ -5,10 +5,10 @@ import store from './store'
 import { Provider } from 'react-redux'
 
 async function enableMocking() {
-  console.log('ENV', process.env.NODE_ENV)
   if (process.env.NODE_ENV !== 'development') {
     return
   }
+  console.log('life-management-app: dev mode')
  
   const { worker } = await import('./mocks/browser')
  
@@ -18,12 +18,6 @@ async function enableMocking() {
 }
 
 enableMocking().then(() => {
-  fetch('/api/bills').then(
-    response => response.json()
-  ).then(
-    data => console.log('Bills', data)
-  )
-
   const container = document.getElementById('root')!
   const root = createRoot(container)
 

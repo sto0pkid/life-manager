@@ -13,7 +13,6 @@ export const hobbiesHandlers = (data : Data) => {
         http.post('/api/hobbies', async (req) => {
             await delay()
             const { hobby } = await req.request.json() as {hobby: Hobby}
-            console.log('/api/hobbies', {hobby})
             const id = uuidv4()
             data.hobbies[id] = {...hobby, id}
             return HttpResponse.json()

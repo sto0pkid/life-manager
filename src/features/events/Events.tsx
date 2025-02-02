@@ -1,32 +1,53 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store'
-import { addEvent, removeEvent } from './eventsSlice'  
+//import { useDispatch, useSelector } from 'react-redux'
+//import { RootState } from '../../store'
+//import { addEvent, removeEvent } from './eventsSlice'  
+import {
+    useGetAllEventsQuery,
+    useAddEventMutation,
+    useRemoveEventMutation
+} from './eventsAPI'
+
 
 const Events: React.FC = () => {
-    const dispatch = useDispatch()
+    const { data: events } = useGetAllEventsQuery()
 
-    const events = useSelector((state : RootState) => state.events)
+    const [ addEvent ] = useAddEventMutation()
+    const [ removeEvent ] = useRemoveEventMutation()
+
+    //const dispatch = useDispatch()
+
+    //const events = useSelector((state : RootState) => state.events)
     //const [events, setEvents] = React.useState<string[]>([]);
 
-    const handleAddEvent = (event: string) => {
-        dispatch(addEvent(event))
+    const handleAddEvent = (name: string) => {
+        //dispatch(addEvent(event))
+        addEvent({id: '', name})
     };
 
-    const handleRemoveEvent = (event : string) => {
-        dispatch(removeEvent(event))
+    const handleRemoveEvent = (id : string) => {
+        //dispatch(removeEvent(event))
+        removeEvent(id)
     }
+
+    const formEvents = events ?? {}
 
     return (
         <div>
             <h2>Upcoming Events</h2>
             <ul>
-                {events.map((event : string, index : number) => (
-                    <li key={index}>
-                        {event}
-                        <button onClick={() => handleRemoveEvent(event)}>Remove</button>
-                    </li>
-                ))}
+                {
+                    Object.keys(formEvents).map(id => {
+                        //(event : string, index : number) => (
+                        const event = formEvents[id]
+                        return (
+                            <li key={id}>
+                                {event.name}
+                                <button onClick={() => handleRemoveEvent(id)}>Remove</button>
+                            </li>
+                        )
+                    })
+                }
             </ul>
             <button onClick={() => handleAddEvent(prompt('Enter event name:') || '')}>
                 Add Event
