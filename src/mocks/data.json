@@ -45,5 +45,11 @@
         "height": 0,
         "bloodPressure": "",
         "heartRate": 0
+    },
+    "fitness": {
+        "id1": {
+            "id": "id1",
+            "name": "Running"
+        }
     }
 }

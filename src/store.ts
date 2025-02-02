@@ -4,7 +4,8 @@ import { budgetApi } from './features/budget/budgetAPI'
 import { billsApi } from './features/bills/billsAPI'
 import { revenuesApi } from './features/revenues/revenuesAPI'
 import { healthApi } from './features/health/healthAPI'
-import fitnessReducer from './features/fitness/fitnessSlice'
+import { fitnessApi } from './features/fitness/fitnessAPI'
+//import fitnessReducer from './features/fitness/fitnessSlice'
 import hobbiesReducer from './features/hobbies/hobbiesSlice'
 import eventsReducer from './features/events/eventsSlice'
 import remindersReducer from './features/reminders/remindersSlice'
@@ -17,7 +18,8 @@ const store = configureStore({
     [billsApi.reducerPath]: billsApi.reducer,
     [revenuesApi.reducerPath]: revenuesApi.reducer,
     [healthApi.reducerPath]: healthApi.reducer,
-    fitness: fitnessReducer,
+    [fitnessApi.reducerPath]: fitnessApi.reducer,
+    //fitness: fitnessReducer,
     hobbies: hobbiesReducer,
     events: eventsReducer,
     reminders: remindersReducer,
@@ -29,7 +31,8 @@ const store = configureStore({
       billsApi.middleware,
       budgetApi.middleware,
       revenuesApi.middleware,
-      healthApi.middleware
+      healthApi.middleware,
+      fitnessApi.middleware
     )
 })
 

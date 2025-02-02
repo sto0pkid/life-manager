@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
-import { addActivity, Activity } from './fitnessSlice'
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store';
+import { 
+    useGetActivitiesQuery,
+    useAddActivityMutation,
+    useRemoveActivityMutation
+} from './fitnessAPI'
 
 const Fitness: React.FC = () => {
-    //const [activities, setActivities] = useState<string[]>([]);
-    const { activities } = useSelector((state: RootState) => state.fitness);
-    const dispatch = useDispatch();
+    const { data : activities} = useGetActivitiesQuery()
+
+    const [ addActivity ] = useAddActivityMutation()
+    const [ removeActivity ] = useRemoveActivityMutation()
+
     const [newActivity, setNewActivity] = useState({ name: '' });
 
 
     const handleAddActivity = () => {
-        if (newActivity) {
-            dispatch(addActivity(newActivity));
-        }
+        addActivity(newActivity)
     };
+
+    const handleRemoveActivity = (id : string) => {
+        removeActivity(id)
+    }
+
+    const formActivities = activities ?? {}
 
     return (
         <div>
@@ -27,9 +35,17 @@ const Fitness: React.FC = () => {
             /> 
             <button onClick={handleAddActivity}>Add Activity</button>
             <ul>
-                {activities.map((act : Activity, index : number) => (
-                    <li key={index}>{act.name}</li>
-                ))}
+                {
+                    Object.keys(formActivities).map(id => {
+                        const activity = formActivities[id]
+                        return (
+                            <li key={id}>
+                                {activity.name}
+                                <button onClick={() => handleRemoveActivity(id)}>Remove</button>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         </div>
     );

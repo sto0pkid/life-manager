@@ -5,6 +5,7 @@ import { budgetHandlers } from '../features/budget/budgetMock'
 import { revenuesHandlers } from '../features/revenues/revenuesMock'
 import { healthHandlers } from '../features/health/healthMock'
 import { Data } from './types'
+import { fitnessHandlers } from '../features/fitness/fitnessMock';
 
 const data : Data = sampleData as Data
 
@@ -14,6 +15,7 @@ export const handlers = [
     ...budgetHandlers(data),
     ...revenuesHandlers(data),
     ...healthHandlers(data),
+    ...fitnessHandlers(data),
     // Catch-all route for any unhandled requests
     http.all('/api/*', () => {
         return new HttpResponse(null, {
