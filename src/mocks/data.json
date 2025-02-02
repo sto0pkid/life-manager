@@ -25,5 +25,25 @@
     "budget": {
         "income": 5000,
         "expenses": 3000 
+    },
+    "revenues": {
+        "id1": {
+            "id": "id1",
+            "name": "Work",
+            "amount": 100,
+            "date": "2023-10-20"
+        },
+        "id2": {
+            "id": "id2",
+            "name": "Side Hustle",
+            "amount": 50,
+            "date": "2023-10-25"
+        }
+    },
+    "health": {
+        "weight": 0,
+        "height": 0,
+        "bloodPressure": "",
+        "heartRate": 0
     }
 }

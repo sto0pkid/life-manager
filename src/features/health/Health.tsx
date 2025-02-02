@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { setHealthMetrics } from './healthSlice';
-import { RootState } from '../../store'; // Import your Redux store's root state type
+import {
+    useGetHealthMetricsQuery,
+    useSetHealthMetricsMutation
+} from './healthAPI';
 
 const Health: React.FC = () => {
-    const healthMetrics = useSelector((state: RootState) => state.health);
-    const dispatch = useDispatch();
+    const { data : healthMetrics } = useGetHealthMetricsQuery();
+
+    const [ setHealthMetrics ] = useSetHealthMetricsMutation();
+
 
     const [newHealthMetrics, setNewHealthMetrics] = useState({
         weight: 0,
@@ -23,8 +25,10 @@ const Health: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Dispatch the action to save health metrics
-        dispatch(setHealthMetrics(newHealthMetrics));
+        setHealthMetrics(newHealthMetrics);
     }
+
+    const formHealthMetrics = healthMetrics ?? {weight: 0, height: 0, bloodPressure: "", heartRate: 0}
 
     return (
         <div>
@@ -32,10 +36,10 @@ const Health: React.FC = () => {
             <div style={{display:"flex",flexDirection:"row"}}>
                 <div>
                     <h3>Current Health Metrics</h3>
-                    <p>Weight: {healthMetrics.weight} kg</p>
-                    <p>Height: {healthMetrics.height} cm</p>
-                    <p>Blood Pressure: {healthMetrics.bloodPressure}</p>
-                    <p>Heart Rate: {healthMetrics.heartRate} bpm</p>
+                    <p>Weight: {formHealthMetrics.weight} kg</p>
+                    <p>Height: {formHealthMetrics.height} cm</p>
+                    <p>Blood Pressure: {formHealthMetrics.bloodPressure}</p>
+                    <p>Heart Rate: {formHealthMetrics.heartRate} bpm</p>
                 </div>
                 <form>
                     <h3>New Health Metrics</h3>

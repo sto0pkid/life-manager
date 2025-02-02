@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addRevenue, removeRevenue } from './revenuesSlice';
-import { RootState } from '../../store'; // Import your Redux store's root state type
+import {
+    useGetAllRevenuesQuery,
+    useAddRevenueMutation,
+    useRemoveRevenueMutation
+} from './revenuesAPI'
+import { Revenue } from './revenueTypes'
+import { uuidv4 } from '../../uuid';
 
 const Revenues: React.FC = () => {
-    const {revenues} = useSelector((state : RootState) => state.revenues)
-    const dispatch = useDispatch()
 
-    const [newRevenue, setNewRevenue] = useState({ name: '', amount: 0, date: '' });
+    const { data: revenues } = useGetAllRevenuesQuery()
+    const [addRevenue] = useAddRevenueMutation();
+    const [removeRevenue] = useRemoveRevenueMutation();
+
+
+    const [newRevenue, setNewRevenue] = useState({ name: '', amount: 0, date: '' } as Revenue);
 
     const handleAddRevenue = () => {
-        const revenue = { id: Date.now(), ...newRevenue };
-        dispatch(addRevenue(revenue));
+        const revenue = { ...newRevenue, id: uuidv4() };
+        addRevenue(revenue)
+        //dispatch(addRevenue(revenue));
     };
 
+    const handleRemoveRevenue = (id : string) => {
+        removeRevenue(id)
+    }
 
+    const formRevenues = revenues ? Object.keys(revenues).map(key => revenues[key]) : []
 
-    const totalRevenue = revenues.reduce((acc, curr) => acc + curr.amount, 0);
+    const totalRevenue = formRevenues.reduce((acc, curr) => acc + curr.amount, 0);
 
     return (
         <div>
@@ -41,10 +53,10 @@ const Revenues: React.FC = () => {
             <button onClick={handleAddRevenue}>Add Revenue</button>
             <h3>Total Revenue: ${totalRevenue}</h3>
             <ul>
-                {revenues.map((revenue, index) => (
+                {formRevenues.map((revenue, index) => (
                     <li key={index}>
                         {revenue.name} - ${revenue.amount} (On: {revenue.date})
-                        <button onClick={() => dispatch(removeRevenue(revenue.id))}>Remove</button>
+                        <button onClick={() => handleRemoveRevenue(revenue.id)}>Remove</button>
                     </li>
                 ))}
             </ul>
