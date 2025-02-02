@@ -69,5 +69,13 @@
             "id": "id1",
             "name": "Take out trash"
         }
+    },
+    "jobLeads": {
+        "id1": {
+            "id": "id1",
+            "title": "Refiner",
+            "company": "Lumon Industries",
+            "status": "Applied"
+        }
     }
 }

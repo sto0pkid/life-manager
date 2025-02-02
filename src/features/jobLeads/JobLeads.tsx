@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store'
-import { addJobLead, removeJobLead } from './jobLeadsSlice.ts'
-import { uuidv4 } from '../../uuid';
+import {
+    useGetAllJobLeadsQuery,
+    useAddJobLeadMutation,
+    useRemoveJobLeadMutation
+} from './jobLeadsAPI'
 
 const JobLeads: React.FC = () => {
-    const dispatch = useDispatch()
-    const jobLeads = useSelector((state : RootState) => state.jobLeads)
+    const { data: jobLeads } = useGetAllJobLeadsQuery()
+    
+    const [ addJobLead ] = useAddJobLeadMutation()
+    const [ removeJobLead ] = useRemoveJobLeadMutation()
 
     const [newLead, setNewLead] = useState({ title: '', company: '', status: 'Open' });
 
     const handleAddJobLead = () => {
-        dispatch(addJobLead({
+        addJobLead({
             ...newLead,
-            id: uuidv4()
-        }))
+            id: ''
+        })
     };
 
     const handleRemoveJobLead = (id : string) => {
-        dispatch(removeJobLead(id));
+        removeJobLead(id)
     }
+
+    const formJobLeads = jobLeads ?? {}
 
     return (
         <div>
@@ -38,8 +43,8 @@ const JobLeads: React.FC = () => {
             />
             <button onClick={handleAddJobLead}>Add Job Lead</button>
             <ul>
-                {Object.keys(jobLeads).map(key => {
-                    const lead = jobLeads[key];
+                {Object.keys(formJobLeads).map(key => {
+                    const lead = formJobLeads[key];
                     return (
                         <li key={lead.id}>
                             {lead.title} at {lead.company} - Status: {lead.status}
