@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../store'
-import { addHobby, removeHobby } from './hobbiesSlice'
+
+import {
+    useGetHobbiesQuery,
+    useAddHobbyMutation,
+    useRemoveHobbyMutation
+} from './hobbiesAPI'
+
 
 const Hobbies: React.FC = () => {
-    const dispatch = useDispatch();
+    const { data : hobbies } = useGetHobbiesQuery()
 
-    //const [hobbies, setHobbies] = useState<string[]>([]);
-    const hobbies = useSelector((state : RootState) => state.hobbies)
+    const [ addHobby ] = useAddHobbyMutation()
+    const [ removeHobby ] = useRemoveHobbyMutation()
+    
     const [newHobby, setNewHobby] = useState<string>('');
 
     const handleAddHobby = () => {
         newHobby.trim()
-        dispatch(addHobby(newHobby))
+        addHobby({id: '', name: newHobby})
     };
 
     const handleRemoveHobby = (hobbyToRemove: string) => {
-        dispatch(removeHobby(hobbyToRemove))
+        removeHobby(hobbyToRemove)
     };
+
+    const formHobbies = hobbies ?? {}
 
     return (
         <div>
@@ -30,12 +37,18 @@ const Hobbies: React.FC = () => {
             />
             <button onClick={handleAddHobby}>Add Hobby</button>
             <ul>
-                {hobbies.map((hobby, index) => (
-                    <li key={index}>
-                        {hobby}
-                        <button onClick={() => handleRemoveHobby(hobby)}>Remove</button>
-                    </li>
-                ))}
+                {
+                    Object.keys(formHobbies).map(id => {
+                        const hobby = formHobbies[id]
+
+                        return (
+                            <li key={id}>
+                                {hobby.name}
+                                <button onClick={() => handleRemoveHobby(id)}>Remove</button>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         </div>
     );

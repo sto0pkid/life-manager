@@ -3,6 +3,7 @@ import { Budget } from '../features/budget/budgetMockTypes'
 import { Revenue } from '../features/revenues/revenuesMockTypes'
 import { Health } from '../features/health/healthMockTypes'
 import { Activity } from '../features/fitness/fitnessMockTypes'
+import { Hobby } from '../features/hobbies/hobbiesMockTypes'
 
 export interface Data {
     bills: {
@@ -15,5 +16,8 @@ export interface Data {
     health: Health,
     fitness: {
         [key:string]: Activity
+    },
+    hobbies: {
+        [key:string]: Hobby
     }
 }

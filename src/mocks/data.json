@@ -51,5 +51,11 @@
             "id": "id1",
             "name": "Running"
         }
+    },
+    "hobbies": {
+        "id1": {
+            "id": "id1",
+            "name": "Guitar"
+        }
     }
 }
