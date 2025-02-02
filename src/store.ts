@@ -7,9 +7,8 @@ import { healthApi } from './features/health/healthAPI'
 import { fitnessApi } from './features/fitness/fitnessAPI'
 import { hobbiesApi } from './features/hobbies/hobbiesAPI'
 import { eventsApi } from './features/events/eventsAPI'
-
-//import eventsReducer from './features/events/eventsSlice'
-import remindersReducer from './features/reminders/remindersSlice'
+import { remindersApi } from './features/reminders/remindersAPI'
+//import remindersReducer from './features/reminders/remindersSlice'
 import jobsReducer from './features/jobs/jobsSlice'
 import jobLeadsReducer from './features/jobLeads/jobLeadsSlice'
 
@@ -22,8 +21,8 @@ const store = configureStore({
     [fitnessApi.reducerPath]: fitnessApi.reducer,
     [hobbiesApi.reducerPath]: hobbiesApi.reducer,
     [eventsApi.reducerPath]: eventsApi.reducer,
-    //events: eventsReducer,
-    reminders: remindersReducer,
+    [remindersApi.reducerPath]: remindersApi.reducer,
+    //reminders: remindersReducer,
     jobs: jobsReducer,
     jobLeads: jobLeadsReducer
   },
@@ -35,7 +34,8 @@ const store = configureStore({
       healthApi.middleware,
       fitnessApi.middleware,
       hobbiesApi.middleware,
-      eventsApi.middleware
+      eventsApi.middleware,
+      remindersApi.middleware
     )
 })
 

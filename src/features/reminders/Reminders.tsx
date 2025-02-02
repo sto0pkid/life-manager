@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
+import {
+    useGetAllRemindersQuery,
+    useAddReminderMutation,
+    useRemoveReminderMutation
+} from './remindersAPI'
 
 const Reminders: React.FC = () => {
-    const [reminders, setReminders] = useState<string[]>([]);
+    const { data: reminders } = useGetAllRemindersQuery()
+
+    const [ addReminder ] = useAddReminderMutation()
+    const [ removeReminder ] = useRemoveReminderMutation()
+    
     const [newReminder, setNewReminder] = useState<string>('');
 
-    const addReminder = () => {
+    const handleAddReminder = () => {
         if (newReminder.trim()) {
-            setReminders([...reminders, newReminder]);
-            setNewReminder('');
+            addReminder({id: '', name: newReminder})
         }
     };
 
-    const removeReminder = (index: number) => {
-        const updatedReminders = reminders.filter((_, i) => i !== index);
-        setReminders(updatedReminders);
+    const handleRemoveReminder = (id : string) => {
+        removeReminder(id)
     };
+
+    const formReminders = reminders ?? {}
 
     return (
         <div>
@@ -25,14 +34,19 @@ const Reminders: React.FC = () => {
                 onChange={(e) => setNewReminder(e.target.value)}
                 placeholder="Add a new reminder"
             />
-            <button onClick={addReminder}>Add</button>
+            <button onClick={handleAddReminder}>Add</button>
             <ul>
-                {reminders.map((reminder, index) => (
-                    <li key={index}>
-                        {reminder}
-                        <button onClick={() => removeReminder(index)}>Remove</button>
-                    </li>
-                ))}
+                {
+                    Object.keys(formReminders).map(id => {
+                        const reminder = formReminders[id]
+                        return (
+                            <li key={id}>
+                                {reminder.name}
+                                <button onClick={() => handleRemoveReminder(reminder.id)}>Remove</button>
+                            </li>  
+                        )
+                    })
+                }
             </ul>
         </div>
     );

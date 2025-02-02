@@ -5,6 +5,7 @@ import { Health } from '../features/health/healthMockTypes'
 import { Activity } from '../features/fitness/fitnessMockTypes'
 import { Hobby } from '../features/hobbies/hobbiesMockTypes'
 import { Event } from '../features/events/eventsMockTypes'
+import { Reminder } from '../features/reminders/remindersMockTypes'
 
 export interface Data {
     bills: {
@@ -23,5 +24,8 @@ export interface Data {
     },
     events: {
         [key:string]: Event
+    },
+    reminders: {
+        [key: string]: Reminder
     }
 }
