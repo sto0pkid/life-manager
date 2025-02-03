@@ -77,5 +77,16 @@
             "company": "Lumon Industries",
             "status": "Applied"
         }
+    },
+    "jobs": {
+        "id1": {
+            "id": "id1",
+            "title": "Refiner",
+            "description": "Great perks",
+            "company": "Lumon Industries",
+            "status": "Applied",
+            "location": "Minnesota",
+            "datePosted": "2025/02/02"
+        }
     }
 }

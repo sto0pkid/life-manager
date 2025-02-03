@@ -14,28 +14,33 @@ import Projection from './features/projection/Projection';
 import JobLeads from './features/jobLeads/JobLeads';
 import Jobs from './features/jobs/Jobs';
 import Meals from './features/meals/Meals';
+import Layout from './Layout'
+import Card from './components/Card'
 
 
 const App: React.FC = () => {
     return (
-        <div>
-            <h1>Life Management System</h1>
-            <Budget />
-            <Bills />
-            <Revenues />
-            <Planning />
-            <Health />
-            <Fitness />
-            <Hobbies />
-            <Travel />
-            <Events />
-            <Reminders />
-            <Schedule />
-            <Projection />
-            <JobLeads />
-            <Jobs />
-            <Meals />
-        </div>
+        <Layout>
+            <div>
+                <Card title="Budget">
+                    <Budget />
+                </Card>
+                <Bills />
+                <Revenues />
+                <Planning />
+                <Health />
+                <Fitness />
+                <Hobbies />
+                <Travel />
+                <Events />
+                <Reminders />
+                <Schedule />
+                <Projection />
+                <JobLeads />
+                <Jobs />
+                <Meals />
+            </div>
+        </Layout>
     );
 };
 

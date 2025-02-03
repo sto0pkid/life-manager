@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Button } from '../../components/ui/button'
+
 import {
     useGetBudgetQuery,
     useSetBudgetMutation
@@ -27,7 +29,6 @@ const Budget: React.FC = () => {
 
     return (
         <div>
-            <h2>Budget Management</h2>
             <div>
                 <label>
                     Income:
@@ -41,7 +42,7 @@ const Budget: React.FC = () => {
                 </label>
             </div>
             <div>
-                <button onClick={handleSave}>Save Budget</button>
+                <Button onClick={handleSave}>Save Budget</Button>
             </div>
             <h3>Savings: {formIncome - formExpenses}</h3>
         </div>

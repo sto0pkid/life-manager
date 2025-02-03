@@ -10,6 +10,7 @@ import { hobbiesHandlers} from '../features/hobbies/hobbiesMock'
 import { eventsHandlers } from '../features/events/eventsMock';
 import { remindersHandlers } from '../features/reminders/remindersMock';
 import { jobLeadsHandlers } from '../features/jobLeads/jobLeadsMock'
+import { jobsHandlers} from '../features/jobs/jobsMock'
 
 const data : Data = sampleData as Data
 
@@ -24,6 +25,7 @@ export const handlers = [
     ...eventsHandlers(data),
     ...remindersHandlers(data),
     ...jobLeadsHandlers(data),
+    ...jobsHandlers(data),
     // Catch-all route for any unhandled requests
     http.all('/api/*', () => {
         return new HttpResponse(null, {

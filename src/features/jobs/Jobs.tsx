@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store'
-import { addJob, removeJob} from './jobsSlice.ts'
-import { uuidv4 } from '../../uuid'
+
+import {
+    useGetAllJobsQuery,
+    useAddJobMutation,
+    useRemoveJobMutation
+} from './jobsAPI'
 
 
 const Jobs : React.FC = () => {
-    const dispatch = useDispatch()
+    const { data : jobs } = useGetAllJobsQuery()
 
-    const jobApplications = useSelector((state : RootState) => state.jobs)
+    const [ addJob ] = useAddJobMutation()
+    const [ removeJob ] = useRemoveJobMutation()
 
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
@@ -19,27 +22,32 @@ const Jobs : React.FC = () => {
 
     const handleAddJobApplication = () => {
         const newApplication = {
-            id: uuidv4(),
+            id: '',
             title,
             company,
             status,
             description,
             location,
-            datePosted,
+            datePosted: datePosted ? datePosted?.toUTCString() : '',
         };
+        addJob(newApplication)
+        clearForm()
+    };
 
-        dispatch(addJob(newApplication))
+    const clearForm = () => {
         setTitle('');
         setCompany('');
         setStatus('');
         setDescription('');
         setLocation('');
         setDatePosted(undefined);
-    };
+    }
 
     const handleRemoveJobApplication = (id : string) => {
-        dispatch(removeJob(id))
+        removeJob(id)
     }
+
+    const formJobs = jobs ?? {}
 
     return (
         <div>
@@ -78,20 +86,25 @@ const Jobs : React.FC = () => {
                 type="date"
                 placeholder="Date Posted"
                 value={datePosted?.toLocaleDateString()}
-                onChange={(e) => setDatePosted(new Date(e.target.value))}
+                onChange={(e) => {
+                    console.log(e.target.value)
+                    const date = new Date(e.target.value)
+                    console.log(date)
+                    setDatePosted(new Date(Date.parse(e.target.value)))
+                }}
             />
             <button onClick={handleAddJobApplication}>Add Job Application</button>
             <ul>
                 {
-                    Object.keys(jobApplications).map(key => {
-                        const application = jobApplications[key]
+                    Object.keys(formJobs).map(key => {
+                        const application = formJobs[key]
                         return (
                             <li key={key}>
                                 <div>
                                     {application.title} at {application.company} - Status: {application.status}
-                                    Description: {application.description}
-                                    Location: {application.location}
-                                    Date Posted: {application.datePosted?.toLocaleDateString()}
+                                    Description: { application.description }
+                                    Location: { application.location }
+                                    Date Posted: { application.datePosted }
                                     <button onClick={() => handleRemoveJobApplication(application.id)}>Remove</button>
                                 </div>
                             </li>

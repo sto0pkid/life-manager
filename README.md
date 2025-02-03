@@ -46,6 +46,7 @@ To get started with the Life Management App, follow these steps:
 
 ## Technologies Used
 
+- vite
 - React: A JavaScript library for building user interfaces.
 - TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
 - redux
@@ -53,7 +54,9 @@ To get started with the Life Management App, follow these steps:
 - Redux Toolkit
 - RTK Query
 - msw (Mock Service Workers)
-- CSS: For styling the application.
+- TailwindCSS
+- ShadCN
+
 
 ## Contributing
 

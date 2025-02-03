@@ -7,6 +7,7 @@ import { Hobby } from '../features/hobbies/hobbiesMockTypes'
 import { Event } from '../features/events/eventsMockTypes'
 import { Reminder } from '../features/reminders/remindersMockTypes'
 import { JobLead } from '../features/jobLeads/jobLeadsMockTypes'
+import { JobApplication } from '../features/jobs/jobsMockTypes'
 
 export interface Data {
     bills: {
@@ -31,5 +32,8 @@ export interface Data {
     },
     jobLeads: {
         [key: string]: JobLead
+    },
+    jobs: {
+        [key: string]: JobApplication
     }
 }
