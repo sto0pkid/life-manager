@@ -1,67 +1,100 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+"use client"
 
+import * as React from "react"
+import {
+  Frame,
+  GalleryVerticalEnd,
+  Map,
+  PieChart,
+  SquareTerminal,
+} from "lucide-react"
+
+import { NavMain } from "@/components/nav-main"
+import { NavProjects } from "@/components/nav-projects"
+import { NavUser } from "@/components/nav-user"
+import { SiteHeader } from "@/components/header"
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
 } from "@/components/ui/sidebar"
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home
-  },
-  {
-    title: "Budget",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+import {  routes } from '../routes'
+
+
+const sidebarOrder = [
+  "/bills",
+  "/budget",
+  "/revenues",
+  "/planning",
+  "/health",
+  "/fitness",
+  "/hobbies",
+  "/travel",
+  "/events",
+  "/reminders",
+  "/schedule",
+  "/projection",
+  "/jobLeads",
+  "/jobs",
+  "/meals"
 ]
 
-export function AppSidebar() {
+// This is sample data.
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  site: {
+    name: "Life Manager",
+    logo: GalleryVerticalEnd,
+  },
+  navMain: [
+    {
+      title: "Tools",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: sidebarOrder.map(path => ({title: routes[path].name, url: path}))
+    },
+  ],
+  projects: [
+    {
+      name: "Life Manager",
+      url: "#",
+      icon: Frame,
+    },
+    {
+      name: "Math Project",
+      url: "#",
+      icon: PieChart,
+    },
+    {
+      name: "Travel",
+      url: "#",
+      icon: Map,
+    },
+  ],
+}
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <SiteHeader site={data.site} />
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 }

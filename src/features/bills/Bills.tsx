@@ -4,20 +4,18 @@ import {
     useAddBillMutation,
     useRemoveBillMutation
 } from './billsAPI';
-import { uuidv4 } from '../../uuid';
 
 
 const Bills: React.FC = () => {
+    const { data : bills } = useGetAllBillsQuery()
 
-    const { data: bills } = useGetAllBillsQuery()
     const [ addBill ] = useAddBillMutation()
-    
     const [ removeBill ] = useRemoveBillMutation()
 
     const [newBill, setNewBill] = useState({ name: '', amount: 0, dueDate: '' });
 
     const handleAddBill = () => {
-        const bill = { id: uuidv4(), ...newBill };
+        const bill = { id: '', ...newBill };
         addBill(bill)
     };
 

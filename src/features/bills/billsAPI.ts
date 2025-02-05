@@ -16,7 +16,7 @@ export const billsApi = createApi({
                 : [],
         }),
         getAllBills: builder.query<{[key:string]: Bill}, void>({
-            query: () => `/`,
+            query: () => ``,
             providesTags: (result) =>
                 result
                   ? [
