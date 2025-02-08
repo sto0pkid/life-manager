@@ -14,7 +14,7 @@ const App: React.FC = () => {
                         {
                             routeOrder.map(path => {
                                 const Component = routes[path].component
-                                return <Route path={path} element={<Component />}/>
+                                return <Route key={path} path={path} element={<Component />}/>
                             })
                         }
                     </>

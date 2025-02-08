@@ -1,3 +1,4 @@
+import Home from './features/home/Home'
 import Budget from './features/budget/Budget';
 import Bills from './features/bills/Bills';
 import Revenues from './features/revenues/Revenues';
@@ -22,6 +23,10 @@ export const routes: {
         component: React.FC
     }
 }= {
+    "/": {
+        name: "Home",
+        component: Home
+    },
     "/budget": {
         name: "Budget",
         component: Budget

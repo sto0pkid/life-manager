@@ -1,44 +1,51 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Revenue } from './revenueTypes'
+import { baseApi } from '../../baseApi'
 
+const REVENUES_API_PATH = '/revenues'
 
-// Define a service using a base URL and expected endpoints
-export const revenuesApi = createApi({
-    reducerPath: 'revenuesApi',
-    baseQuery: fetchBaseQuery({ baseUrl: '/api/revenues' }),
-    tagTypes: ['Revenues'],
-    endpoints: (builder) => ({
-        getAllRevenues: builder.query<{[key:string]: Revenue}, void>({
-            query: () => ``,
-            providesTags: (result) =>
-                result
-                ? [{ type: 'Revenues', id: 'LIST' }] 
-                : [],
-        }),
-        getRevenueById: builder.query<Revenue, string>({
-            query: (id) => `/${id}`,
-            providesTags: (result) =>
-                result
-                ? [{ type: 'Revenues', id: result.id }] 
-                : [],
-        }),
-        addRevenue: builder.mutation<Revenue, Partial<Revenue> & Pick<Revenue, 'id'>>({
-            query: (revenue) => ({
-                url: ``,
-                method: 'POST',
-                body: revenue,
+const revenuesApi = baseApi
+    .enhanceEndpoints({addTagTypes: ['Revenues']})
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getAllRevenues: builder.query<{[key:string]: Revenue}, void>({
+                query: () => `${REVENUES_API_PATH}`,
+                providesTags: (result) => [
+                    { type : 'All' },
+                    { type : 'Revenues', id : 'LIST' },
+                    ...(
+                        result
+                        ? (
+                            Object.keys(result).map(revenueId => ({ type : 'Revenues', id : revenueId }))
+                        ) : []
+                    ) as { type : 'Revenues', id : string }[]
+                ]
             }),
-            invalidatesTags: [{ type: 'Revenues', id: 'LIST' }],
-        }),
-        removeRevenue: builder.mutation<void, string>({
-            query: (id) => ({
-                url: `/${id}`,
-                method: 'DELETE',
+            getRevenueById: builder.query<Revenue, string>({
+                query: (id) => `${REVENUES_API_PATH}/${id}`,
+                providesTags: (_result, _error, arg) => [
+                    { type: 'Revenues', id : arg }
+                ]
             }),
-            invalidatesTags: [{ type: 'Revenues', id: 'LIST' }],
+            addRevenue: builder.mutation<Revenue, Partial<Revenue> & Pick<Revenue, 'id'>>({
+                query: (revenue) => ({
+                    url: `${REVENUES_API_PATH}`,
+                    method: 'POST',
+                    body: revenue,
+                }),
+                invalidatesTags: [{ type: 'Revenues', id: 'LIST' }],
+            }),
+            removeRevenue: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${REVENUES_API_PATH}/${id}`,
+                    method: 'DELETE',
+                }),
+                invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Revenues', id : 'LIST' },
+                    { type : 'Revenues', id : arg }
+                ],
+            })
         })
     })
-})
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints

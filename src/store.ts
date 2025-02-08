@@ -1,42 +1,26 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
-import { budgetApi } from './features/budget/budgetAPI'
-import { billsApi } from './features/bills/billsAPI'
-import { revenuesApi } from './features/revenues/revenuesAPI'
-import { healthApi } from './features/health/healthAPI'
-import { fitnessApi } from './features/fitness/fitnessAPI'
-import { hobbiesApi } from './features/hobbies/hobbiesAPI'
-import { eventsApi } from './features/events/eventsAPI'
-import { remindersApi } from './features/reminders/remindersAPI'
-import { jobLeadsApi } from './features/jobLeads/jobLeadsAPI'
-import { jobsApi } from './features/jobs/jobsAPI'
+
+import { baseApi } from './baseApi'
+
+// to make sure all the API extensions get applied to the base API
+import {} from './features/budget/budgetAPI'
+import {} from './features/bills/billsAPI'
+import {} from './features/revenues/revenuesAPI'
+import {} from './features/health/healthAPI'
+import {} from './features/fitness/fitnessAPI'
+import {} from './features/hobbies/hobbiesAPI'
+import {} from './features/events/eventsAPI'
+import {} from './features/reminders/remindersAPI'
+import {} from './features/jobLeads/jobLeadsAPI'
+import {} from './features/jobs/jobsAPI'
 
 const store = configureStore({
   reducer: {
-    [budgetApi.reducerPath]: budgetApi.reducer,
-    [billsApi.reducerPath]: billsApi.reducer,
-    [revenuesApi.reducerPath]: revenuesApi.reducer,
-    [healthApi.reducerPath]: healthApi.reducer,
-    [fitnessApi.reducerPath]: fitnessApi.reducer,
-    [hobbiesApi.reducerPath]: hobbiesApi.reducer,
-    [eventsApi.reducerPath]: eventsApi.reducer,
-    [remindersApi.reducerPath]: remindersApi.reducer,
-    [jobLeadsApi.reducerPath]: jobLeadsApi.reducer,
-    [jobsApi.reducerPath]: jobsApi.reducer
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      billsApi.middleware,
-      budgetApi.middleware,
-      revenuesApi.middleware,
-      healthApi.middleware,
-      fitnessApi.middleware,
-      hobbiesApi.middleware,
-      eventsApi.middleware,
-      remindersApi.middleware,
-      jobLeadsApi.middleware,
-      jobsApi.middleware
-    )
+    getDefaultMiddleware().concat(baseApi.middleware)
 })
 
 export default store

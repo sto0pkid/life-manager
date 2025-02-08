@@ -9,7 +9,7 @@ import {
 
 export function SiteHeader({
   site,
-}: {
+} : {
   site: {
     name: string
     logo: React.ElementType

@@ -1,32 +1,45 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { JobApplication } from './jobsTypes'
+import { baseApi } from '../../baseApi'
 
-export const jobsApi = createApi({
-    reducerPath: 'jobsApi',
-    baseQuery: fetchBaseQuery({ baseUrl : '/api/jobs' }),
-    tagTypes: ['Jobs'],
-    endpoints: (builder) => ({
-        getAllJobs: builder.query<{[key:string] : JobApplication}, void>({
-            query: () => ``,
-            providesTags: [{type: 'Jobs', id: 'LIST'}]
-        }),
-        addJob: builder.mutation<JobApplication, JobApplication>({
-            query: (job) => ({
-                url: ``,
-                method: 'POST',
-                body: { data : job }
+const JOBS_API_PATH = '/jobs'
+
+const jobsApi = baseApi
+    .enhanceEndpoints({addTagTypes: ['Jobs']})
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getAllJobs: builder.query<{[key:string] : JobApplication}, void>({
+                query: () => `${JOBS_API_PATH}`,
+                providesTags: (result) => [
+                    { type : 'All' },
+                    { type : 'Jobs', id : 'LIST' },
+                    ...(
+                        result
+                        ? (
+                            Object.keys(result).map(jobId => ({ type : 'Jobs', id : jobId }))
+                        ) : []
+                    ) as { type : 'Jobs' , id : string}[]
+                ]
             }),
-            invalidatesTags: [{type: 'Jobs', id: 'LIST'}]
-        }),
-        removeJob: builder.mutation<void, string>({
-            query: (id) => ({
-                url: `/${id}`,
-                method: 'DELETE'
+            addJob: builder.mutation<JobApplication, JobApplication>({
+                query: (job) => ({
+                    url: `${JOBS_API_PATH}`,
+                    method: 'POST',
+                    body: { data : job }
+                }),
+                invalidatesTags: [{type: 'Jobs', id: 'LIST'}]
             }),
-            invalidatesTags: [{type: 'Jobs', id: 'LIST'}]
+            removeJob: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${JOBS_API_PATH}/${id}`,
+                    method: 'DELETE'
+                }),
+                invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Jobs', id : 'LIST' },
+                    { type : 'Jobs', id : arg }
+                ]
+            })
         })
     })
-})
 
 export const {
     useGetAllJobsQuery,

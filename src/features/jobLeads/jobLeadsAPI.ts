@@ -1,32 +1,45 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { JobLead } from './jobLeadsTypes'
+import { baseApi } from '../../baseApi'
 
-export const jobLeadsApi = createApi({
-    reducerPath: 'jobLeadsApi',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/jobLeads'}),
-    tagTypes: ['JobLeads'],
-    endpoints: (builder) => ({
-        getAllJobLeads: builder.query<{[key:string]: JobLead},void>({
-            query: () => ``,
-            providesTags: [{type: 'JobLeads', id: 'LIST'}]
-        }),
-        addJobLead: builder.mutation<JobLead, JobLead>({
-            query: (jobLead) => ({
-                url: ``,
-                method: 'POST',
-                body: {data: jobLead}
+const JOB_LEADS_API_PATH = '/jobLeads'
+
+const jobLeadsApi = baseApi
+    .enhanceEndpoints({addTagTypes: ['JobLeads']})
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getAllJobLeads: builder.query<{[key:string]: JobLead},void>({
+                query: () => `${JOB_LEADS_API_PATH}`,
+                providesTags: (result) => [
+                    { type : 'All' },
+                    { type : 'JobLeads', id : 'LIST' },
+                    ...(
+                        result
+                        ? (
+                            Object.keys(result).map(jobLeadId => ({ type : 'JobLeads' , id : jobLeadId }))
+                        ) : []
+                    ) as { type : 'JobLeads' , id : string }[]
+                ]
             }),
-            invalidatesTags: [{type: 'JobLeads', id: 'LIST'}]
-        }),
-        removeJobLead: builder.mutation<void, string>({
-            query: (id) => ({
-                url: `/${id}`,
-                method: 'DELETE'
+            addJobLead: builder.mutation<JobLead, JobLead>({
+                query: (jobLead) => ({
+                    url: `${JOB_LEADS_API_PATH}`,
+                    method: 'POST',
+                    body: {data: jobLead}
+                }),
+                invalidatesTags: [{type: 'JobLeads', id: 'LIST'}]
             }),
-            invalidatesTags: [{type: 'JobLeads', id: 'LIST'}]
+            removeJobLead: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${JOB_LEADS_API_PATH}/${id}`,
+                    method: 'DELETE'
+                }),
+                invalidatesTags: (_result, _error, arg) => [
+                    { type : 'JobLeads', id : 'LIST' },
+                    { type : 'JobLeads', id : arg }
+                ]
+            })
         })
     })
-})
 
 export const {
     useGetAllJobLeadsQuery,

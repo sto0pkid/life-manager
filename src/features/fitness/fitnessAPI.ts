@@ -1,36 +1,39 @@
-import { createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import { Activity } from './fitnessTypes'
+import { baseApi } from '../../baseApi'
 
-// Define a service using a base URL and expected endpoints
-export const fitnessApi = createApi({
-    reducerPath: 'fitnessApi',
-    baseQuery: fetchBaseQuery({ baseUrl: '/api/fitness' }),
-    tagTypes: ['Fitness'],
-    endpoints: (builder) => ({
-        getActivities: builder.query<{[key:string]: Activity}, void>({
-            query: () => ``,
-            providesTags: (result) =>
-                result
-                ? [{ type: 'Fitness' }] 
-                : [],
-        }),
-        addActivity: builder.mutation<void, Activity>({
-            query: (activity) => ({
-                url: ``,
-                method: 'POST',
-                body: activity,
+const FITNESS_API_PATH = '/fitness'
+
+const fitnessApi = baseApi
+    .enhanceEndpoints({addTagTypes: ['Fitness']})
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getActivities: builder.query<{[key:string]: Activity}, void>({
+                query: () => `${FITNESS_API_PATH}`,
+                providesTags: [
+                    { type : 'All' },
+                    { type : 'Fitness', id : 'LIST' }
+                ],
             }),
-            invalidatesTags: [{ type: 'Fitness' }],
-        }),
-        removeActivity: builder.mutation<void, string>({
-            query: (id : string) => ({
-                url: `/${id}`,
-                method: 'DELETE'
+            addActivity: builder.mutation<void, Activity>({
+                query: (activity) => ({
+                    url: `${FITNESS_API_PATH}`,
+                    method: 'POST',
+                    body: activity,
+                }),
+                invalidatesTags: [{ type: 'Fitness', id : 'LIST'}],
             }),
-            invalidatesTags: [{type: 'Fitness'}]
+            removeActivity: builder.mutation<void, string>({
+                query: (id : string) => ({
+                    url: `${FITNESS_API_PATH}/${id}`,
+                    method: 'DELETE'
+                }),
+                invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Fitness', id : 'LIST' },
+                    { type : 'Fitness', id : arg }
+                ]
+            })
         })
     })
-})
 
 export const {
     useGetActivitiesQuery,

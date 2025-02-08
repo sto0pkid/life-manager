@@ -1,32 +1,45 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Event } from './eventsTypes'
+import { baseApi } from '../../baseApi'
 
-export const eventsApi = createApi({
-    reducerPath: 'eventsApi',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/events' }),
-    tagTypes: ['Events'],
-    endpoints: (builder) => ({
-        getAllEvents: builder.query<{[key:string]: Event}, void>({
-            query: () => ``,
-            providesTags: [{type: 'Events', id: 'LIST'}]
-        }),
-        addEvent: builder.mutation<void, Event>({
-            query: (event) => ({
-                url: ``,
-                method: 'POST',
-                body: {event}
+const EVENTS_API_PATH = '/events'
+
+const eventsApi = baseApi
+    .enhanceEndpoints({addTagTypes: ['Events']})
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            getAllEvents: builder.query<{[key:string]: Event}, void>({
+                query: () => `${EVENTS_API_PATH}`,
+                providesTags: (result) => [
+                    { type : 'All' },
+                    { type : 'Events', id : 'LIST'},
+                    ...(
+                        result
+                        ? (
+                            Object.keys(result).map((eventId : string) => ({ type : 'Events' , id : eventId }))
+                        ) : []
+                    ) as { type : 'Events' , id : string }[]
+                ]
             }),
-            invalidatesTags: [{type: 'Events', id: 'LIST'}]
-        }),
-        removeEvent: builder.mutation<void, string>({
-            query: (id) => ({
-                url: `/${id}`,
-                method: 'DELETE'
+            addEvent: builder.mutation<void, Event>({
+                query: (event) => ({
+                    url: `${EVENTS_API_PATH}`,
+                    method: 'POST',
+                    body: {event}
+                }),
+                invalidatesTags: [{type: 'Events', id: 'LIST'}]
             }),
-            invalidatesTags: [{type: 'Events', id: 'LIST'}]
+            removeEvent: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${EVENTS_API_PATH}/${id}`,
+                    method: 'DELETE'
+                }),
+                invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Events', id : 'LIST' },
+                    { type : 'Events', id : arg }
+                ]
+            })
         })
     })
-})
 
 export const {
     useGetAllEventsQuery,
