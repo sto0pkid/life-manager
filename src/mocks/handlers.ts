@@ -1,16 +1,18 @@
 import { http, HttpResponse } from 'msw'
-import sampleData from './data.json'
+
 import { billsHandlers } from '../features/bills/billsMock';
 import { budgetHandlers } from '../features/budget/budgetMock'
 import { revenuesHandlers } from '../features/revenues/revenuesMock'
 import { healthHandlers } from '../features/health/healthMock'
-import { Data } from './types'
 import { fitnessHandlers } from '../features/fitness/fitnessMock';
 import { hobbiesHandlers} from '../features/hobbies/hobbiesMock'
 import { eventsHandlers } from '../features/events/eventsMock';
 import { remindersHandlers } from '../features/reminders/remindersMock';
 import { jobLeadsHandlers } from '../features/jobLeads/jobLeadsMock'
 import { jobsHandlers} from '../features/jobs/jobsMock'
+
+import sampleData from './data.json'
+import { Data } from './types'
 
 const data : Data = sampleData as Data
 

@@ -8,7 +8,7 @@ import Layout from './Layout'
 const App: React.FC = () => {
     return (
         <Layout>
-            <div>
+            <div className="w-full h-full">
                 <Routes>
                     <>
                         {

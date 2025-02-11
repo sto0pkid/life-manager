@@ -1,7 +1,4 @@
-import React from 'react';
-//import { useDispatch, useSelector } from 'react-redux'
-//import { RootState } from '../../store'
-//import { addEvent, removeEvent } from './eventsSlice'  
+import React, {useState} from 'react';
 import {
     useGetAllEventsQuery,
     useAddEventMutation,
@@ -15,18 +12,14 @@ const Events: React.FC = () => {
     const [ addEvent ] = useAddEventMutation()
     const [ removeEvent ] = useRemoveEventMutation()
 
-    //const dispatch = useDispatch()
+    const [ newEvent, setNewEvent ] = useState({name: ''})
 
-    //const events = useSelector((state : RootState) => state.events)
-    //const [events, setEvents] = React.useState<string[]>([]);
 
-    const handleAddEvent = (name: string) => {
-        //dispatch(addEvent(event))
-        addEvent({id: '', name})
+    const handleAddEvent = () => {
+        addEvent({...newEvent, id: ''})
     };
 
     const handleRemoveEvent = (id : string) => {
-        //dispatch(removeEvent(event))
         removeEvent(id)
     }
 
@@ -34,24 +27,52 @@ const Events: React.FC = () => {
 
     return (
         <div>
-            <h2>Upcoming Events</h2>
-            <ul>
+            <table>
+                <tr>
+                    <th>Event Name</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder={"Event name"}
+                            onChange={(e) => {setNewEvent({...newEvent, name: e.target.value})}}
+                        />
+                    </td>
+                    <td>
+                        <button
+                            className="btn btn-primary"
+                            onClick={handleAddEvent}
+                        >
+                            Add Event
+                        </button>
+                    </td>
+                </tr>
                 {
                     Object.keys(formEvents).map(id => {
                         //(event : string, index : number) => (
                         const event = formEvents[id]
                         return (
-                            <li key={id}>
-                                {event.name}
-                                <button onClick={() => handleRemoveEvent(id)}>Remove</button>
-                            </li>
+                            <tr className="border border-gray-200" key={id}>
+                                <td>
+                                    {event.name}
+                                </td>
+                                <td>
+                                    <button
+                                        className="btn btn-secondary"
+                                        onClick={() => handleRemoveEvent(id)}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
                         )
                     })
                 }
-            </ul>
-            <button onClick={() => handleAddEvent(prompt('Enter event name:') || '')}>
-                Add Event
-            </button>
+            </table>
+            
         </div>
     );
 };

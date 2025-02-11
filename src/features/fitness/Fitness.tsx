@@ -26,27 +26,47 @@ const Fitness: React.FC = () => {
 
     return (
         <div>
-            <h2>Fitness Activities</h2>
-            <input
-                type="text"
-                value={newActivity.name}
-                onChange={(e) => setNewActivity({name: e.target.value})}
-                placeholder="Add a new activity"
-            /> 
-            <button onClick={handleAddActivity}>Add Activity</button>
-            <ul>
+            
+            <table className="table">
+                <tr>
+                    <th>Activity Name</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            value={newActivity.name}
+                            onChange={(e) => setNewActivity({name: e.target.value})}
+                            placeholder="Add a new activity"
+                        />
+                    </td>
+                    <td>
+                        <button
+                            className="btn btn-primary"
+                            onClick={handleAddActivity}
+                        >
+                            Add Activity
+                        </button>
+                    </td>
+                </tr>
                 {
                     Object.keys(formActivities).map(id => {
                         const activity = formActivities[id]
                         return (
-                            <li key={id}>
-                                {activity.name}
-                                <button onClick={() => handleRemoveActivity(id)}>Remove</button>
-                            </li>
+                            <tr className="border-gray-500" key={id}>
+                                <td>
+                                    {activity.name}
+                                </td>
+                                <td>
+                                    <button className="btn btn-secondary" onClick={() => handleRemoveActivity(id)}>Remove</button>
+                                </td>
+                            </tr>
                         )
                     })
                 }
-            </ul>
+            </table>
         </div>
     );
 };

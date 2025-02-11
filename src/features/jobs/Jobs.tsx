@@ -50,69 +50,123 @@ const Jobs : React.FC = () => {
     const formJobs = jobs ?? {}
 
     return (
-        <div>
-            <h2>Job Applications</h2>
-            <input
-                type="text"
-                placeholder="Job Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Company"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-            />
-            <input
-                type="date"
-                placeholder="Date Posted"
-                value={datePosted?.toLocaleDateString()}
-                onChange={(e) => {
-                    console.log(e.target.value)
-                    const date = new Date(e.target.value)
-                    console.log(date)
-                    setDatePosted(new Date(Date.parse(e.target.value)))
-                }}
-            />
-            <button onClick={handleAddJobApplication}>Add Job Application</button>
-            <ul>
+        <div>            
+            <table className="table">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Date Posted</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Job Title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Company"
+                            value={company}
+                            onChange={(e) => setCompany(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Status"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Location"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="date"
+                            placeholder="Date Posted"
+                            value={datePosted?.toLocaleDateString()}
+                            onChange={(e) => {
+                                console.log(e.target.value)
+                                const date = new Date(e.target.value)
+                                console.log(date)
+                                setDatePosted(new Date(Date.parse(e.target.value)))
+                            }}
+                        />
+                    </td>
+                    <td>
+                        <button 
+                            className="btn btn-primary"
+                            onClick={handleAddJobApplication}
+                        >
+                            Add Job Application
+                        </button>
+                    </td>
+                </tr>
                 {
                     Object.keys(formJobs).map(key => {
                         const application = formJobs[key]
                         return (
-                            <li key={key}>
-                                <div>
-                                    {application.title} at {application.company} - Status: {application.status}
-                                    Description: { application.description }
-                                    Location: { application.location }
-                                    Date Posted: { application.datePosted }
-                                    <button onClick={() => handleRemoveJobApplication(application.id)}>Remove</button>
-                                </div>
-                            </li>
+                            <tr className="border border-gray-200" key={key}>
+                                <td>
+                                    {application.title}
+                                </td>
+                                <td>
+                                    {application.company}
+                                </td>
+                                <td>
+                                    {application.status}
+                                </td>
+                                <td>
+                                    { application.description }
+                                </td>
+                                <td>
+                                    { application.location }
+                                </td>
+                                <td>
+                                    { application.datePosted }
+                                </td>
+                                <td>
+                                    <button 
+                                        className="btn btn-secondary"
+                                        onClick={() => handleRemoveJobApplication(application.id)}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
                         )
                     })
                 }
        
-            </ul>
+            </table>
         </div>
     );
 };

@@ -29,27 +29,39 @@ const Hobbies: React.FC = () => {
     return (
         <div>
             <h2>Manage Your Hobbies</h2>
-            <input
-                type="text"
-                value={newHobby}
-                onChange={(e) => setNewHobby(e.target.value)}
-                placeholder="Add a new hobby"
-            />
-            <button onClick={handleAddHobby}>Add Hobby</button>
-            <ul>
+            
+            <table className="table">
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            value={newHobby}
+                            onChange={(e) => setNewHobby(e.target.value)}
+                            placeholder="Add a new hobby"
+                        />
+                    </td>
+                    <td>
+                        <button className="btn btn-primary" onClick={handleAddHobby}>Add Hobby</button>
+                    </td>
+                </tr>
                 {
                     Object.keys(formHobbies).map(id => {
                         const hobby = formHobbies[id]
 
                         return (
-                            <li key={id}>
-                                {hobby.name}
-                                <button onClick={() => handleRemoveHobby(id)}>Remove</button>
-                            </li>
+                            <tr className="border border-gray-200" key={id}>
+                                <td>
+                                    {hobby.name}
+                                </td>
+                                <td>
+                                    <button className="btn btn-secondary" onClick={() => handleRemoveHobby(id)}>Remove</button>
+                                </td>
+                            </tr>
                         )
                     })
                 }
-            </ul>
+            </table>
         </div>
     );
 };

@@ -19,7 +19,6 @@ const Revenues: React.FC = () => {
     const handleAddRevenue = () => {
         const revenue = { ...newRevenue, id: uuidv4() };
         addRevenue(revenue)
-        //dispatch(addRevenue(revenue));
     };
 
     const handleRemoveRevenue = (id : string) => {
@@ -32,34 +31,68 @@ const Revenues: React.FC = () => {
 
     return (
         <div>
-            <h2>Revenues</h2>
-            <input
-                type="text"
-                placeholder="Name"
-                value={newRevenue.name}
-                onChange={(e) => setNewRevenue({ ...newRevenue, name: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Amount"
-                value={newRevenue.amount}
-                onChange={(e) => setNewRevenue({ ...newRevenue, amount: Number(e.target.value) })}
-            />
-            <input
-                type="date"
-                value={newRevenue.date}
-                onChange={(e) => setNewRevenue({ ...newRevenue, date: e.target.value })}
-            />
-            <button onClick={handleAddRevenue}>Add Revenue</button>
-            <h3>Total Revenue: ${totalRevenue}</h3>
-            <ul>
+            <table className="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            placeholder="Name"
+                            value={newRevenue.name}
+                            onChange={(e) => setNewRevenue({ ...newRevenue, name: e.target.value })}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="number"
+                            placeholder="Amount"
+                            value={newRevenue.amount}
+                            onChange={(e) => setNewRevenue({ ...newRevenue, amount: Number(e.target.value) })}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="date"
+                            value={newRevenue.date}
+                            onChange={(e) => setNewRevenue({ ...newRevenue, date: e.target.value })}
+                        />
+                    </td>
+                    <td>
+                        <button className="btn btn-primary" onClick={handleAddRevenue}>Add Revenue</button>
+                    </td>
+                </tr>
                 {formRevenues.map((revenue, index) => (
-                    <li key={index}>
-                        {revenue.name} - ${revenue.amount} (On: {revenue.date})
-                        <button onClick={() => handleRemoveRevenue(revenue.id)}>Remove</button>
-                    </li>
+                    <tr key={index}>
+                        <td>{revenue.name}</td>
+                        <td>{revenue.amount}</td>
+                        <td>{revenue.date}</td>
+                        <td>
+                            <button
+                                className="btn btn-secondary"
+                                onClick={() => handleRemoveRevenue(revenue.id)}
+                            >
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
                 ))}
-            </ul>
+                <tr>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        {totalRevenue}
+                    </th>
+                </tr>
+            </table>
         </div>
     );
 };

@@ -27,27 +27,51 @@ const Reminders: React.FC = () => {
 
     return (
         <div>
-            <h2>Reminders</h2>
-            <input
-                type="text"
-                value={newReminder}
-                onChange={(e) => setNewReminder(e.target.value)}
-                placeholder="Add a new reminder"
-            />
-            <button onClick={handleAddReminder}>Add</button>
-            <ul>
+            <table>
+                <tr>
+                    <th>Reminder name</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                            className="input input-bordered"
+                            type="text"
+                            value={newReminder}
+                            onChange={(e) => setNewReminder(e.target.value)}
+                            placeholder="Add a new reminder"
+                        />
+                    </td>
+                    <td>
+                        <button
+                            className="btn btn-primary"
+                            onClick={handleAddReminder}
+                        >
+                            Add
+                        </button>
+                    </td>
+                </tr>
                 {
                     Object.keys(formReminders).map(id => {
                         const reminder = formReminders[id]
                         return (
-                            <li key={id}>
-                                {reminder.name}
-                                <button onClick={() => handleRemoveReminder(reminder.id)}>Remove</button>
-                            </li>  
+                            <tr className="border border-gray-200" key={id}>
+                                <td>
+                                    {reminder.name}
+                                </td>
+                                <td>
+                                    <button 
+                                        className="btn btn-secondary"
+                                        onClick={() => handleRemoveReminder(reminder.id)}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>  
                         )
                     })
                 }
-            </ul>
+            </table>
         </div>
     );
 };
