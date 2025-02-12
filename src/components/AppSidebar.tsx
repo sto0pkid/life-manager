@@ -45,9 +45,9 @@ const sidebarOrder = [
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Me",
+    email: "me@example.com",
+    avatar: "/avatars/me",
   },
   site: {
     name: "Life Manager",
