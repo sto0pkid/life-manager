@@ -10,6 +10,8 @@ import { eventsHandlers } from '../features/events/eventsMock';
 import { remindersHandlers } from '../features/reminders/remindersMock';
 import { jobLeadsHandlers } from '../features/jobLeads/jobLeadsMock'
 import { jobsHandlers} from '../features/jobs/jobsMock'
+import { mealsHandlers } from '../features/meals/mock'
+import { recipesHandlers } from '../features/meals/recipesMock'
 
 import sampleData from './data.json'
 import { Data } from './types'
@@ -28,6 +30,8 @@ export const handlers = [
     ...remindersHandlers(data),
     ...jobLeadsHandlers(data),
     ...jobsHandlers(data),
+    ...mealsHandlers(data),
+    ...recipesHandlers(data),
     // Catch-all route for any unhandled requests
     http.all('/api/*', () => {
         return new HttpResponse(null, {

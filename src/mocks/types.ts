@@ -8,6 +8,7 @@ import { Event } from '../features/events/eventsMockTypes'
 import { Reminder } from '../features/reminders/remindersMockTypes'
 import { JobLead } from '../features/jobLeads/jobLeadsMockTypes'
 import { JobApplication } from '../features/jobs/jobsMockTypes'
+import { Meal, Recipe } from '../features/meals/types'
 
 export interface Data {
     bills: {
@@ -35,5 +36,11 @@ export interface Data {
     },
     jobs: {
         [key: string]: JobApplication
+    },
+    meals: {
+        [key: string]: Meal
+    },
+    recipes: {
+        [key: string]: Recipe
     }
 }

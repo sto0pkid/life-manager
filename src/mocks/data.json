@@ -88,5 +88,92 @@
             "location": "Minnesota",
             "datePosted": "2025/02/02"
         }
+    },
+    "meals": {
+        "id1": {
+            "id": "id1",
+            "mealName": "Dinner",
+            "dateTime": "2025-02-11",
+            "foods": {
+                "byIds": {
+                    "id1": {
+                        "label": "Eggs",
+                        "amount": {
+                            "magnitude": 10,
+                            "unit": "egg"
+                        }
+                    }
+                },
+                "allIds": ["id1"]
+            }
+        }
+    },
+    "recipes": {
+        "id1": {
+            "id": "id1",
+            "name": "Good Old Fashioned All-American French Toast",
+            "ingredients": {
+                "byIds": {
+                    "id1": {
+                        "label": "Eggs",
+                        "amount": {
+                            "magnitude": 4,
+                            "unit": "egg"
+                        }
+                    },
+                    "id2": {
+                        "label": "Bread",
+                        "amount": {
+                            "magnitude": 8,
+                            "unit": "slice"
+                        }
+                    }
+                },
+                "allIds": ["id1", "id2"]
+            },
+            "steps": {
+                "step1": {
+                    "description": "Make toast",
+                    "dependsOn": [],
+                    "duration": {
+                        "magnitude": 2,
+                        "unit": "minute"
+                    }
+                },
+                "step2": {
+                    "description": "Make the toast be French",
+                    "dependsOn": ["step1"],
+                    "duration": {
+                        "magnitude": 5,
+                        "unit": "minute"
+                    }
+                }
+            },
+            "output": {
+                "id": "id3",
+                "description": "French toast",
+                "amount": {
+                    "magnitude": 8,
+                    "unit": "slice"
+                }
+            }
+        }
+    },
+    "foods": {
+        "id1": {
+            "id": "id1",
+            "name": "Egg",
+            "metadata": {}
+        },
+        "id2": {
+            "id": "id2",
+            "name": "Bread",
+            "metadata": {}
+        },
+        "id3": {
+            "id": "id3",
+            "name": "Good Old Fashioned All-American French Toast",
+            "metadata": {}
+        }
     }
 }
