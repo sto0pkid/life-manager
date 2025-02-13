@@ -1,5 +1,7 @@
 # Life Management App
 
+**THIS IS ONLY A DEMO**
+
 This project is a comprehensive life management web application designed to integrate various aspects of daily life into a single interactive platform. The application allows users to manage their budget, bills, revenues, health, fitness, hobbies, travel, events, reminders, schedules, job leads, job applications, and meal planning.
 
 ## Features
@@ -41,21 +43,23 @@ To get started with the Life Management App, follow these steps:
 
 4. **Run the application**:
    ```
-   npm start
+   npm run dev
    ```
 
 ## Technologies Used
 
-- vite
-- React: A JavaScript library for building user interfaces.
-- TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
-- redux
-- redux-react
-- Redux Toolkit
-- RTK Query
-- msw (Mock Service Workers)
-- TailwindCSS
-- ShadCN
+- **vite**
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **redux**
+- **redux-react**
+- **Redux Toolkit**
+- **RTK Query**
+- **msw**: Mock Service Workers
+- **TailwindCSS**
+- **ShadCN**
+- **DaisyUI**
+- **LeafletJS**
 
 
 ## Contributing
