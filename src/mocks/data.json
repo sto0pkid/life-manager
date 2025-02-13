@@ -175,5 +175,19 @@
             "name": "Good Old Fashioned All-American French Toast",
             "metadata": {}
         }
+    },
+    "goals": {
+        "id1": {
+            "id": "id1",
+            "name": "Run marathon",
+            "description": "Run a whole marathon",
+            "completeBy": "2026-01-01",
+            "dependsOn": [
+                {
+                    "id": "id1",
+                    "name": "Be in shape"
+                }
+            ]
+        }
     }
 }

@@ -10,7 +10,6 @@ import Travel from './features/travel/Travel';
 import Events from './features/events/Events';
 import Reminders from './features/reminders/Reminders';
 import Schedule from './features/schedule/Schedule';
-import Projection from './features/projection/Projection';
 import JobLeads from './features/jobLeads/JobLeads';
 import Jobs from './features/jobs/Jobs';
 import Meals from './features/meals/Meals';
@@ -70,10 +69,6 @@ export const routes: {
     "/schedule": {
         name: "Schedule",
         component: Schedule
-    },
-    "/projection": {
-        name: "Projection",
-        component: Projection
     },
     "/jobLeads": {
         name: "Job Leads",

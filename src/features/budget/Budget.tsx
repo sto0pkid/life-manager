@@ -1,50 +1,64 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router'
 
-import { Button } from '../../components/ui/button'
-
-import {
-    useGetBudgetQuery,
-    useSetBudgetMutation
-} from './budgetAPI'
+import { useGetAllRevenuesQuery } from '../revenues/revenuesAPI';
+import { useGetAllBillsQuery } from '../bills/billsAPI';
 
 const Budget: React.FC = () => {
-    const { data: budget } = useGetBudgetQuery();
+    const { data : revenues } = useGetAllRevenuesQuery()
+    const { data : bills } = useGetAllBillsQuery()
 
-    const [ setBudget ] = useSetBudgetMutation();
+    const formIncome = (
+        revenues
+        ? Object.keys(revenues).reduce((acc, cur) => acc + revenues[cur].amount, 0)
+        : undefined
+    )
 
-    const [formIncome, setFormIncome] = useState(budget?.income || 0);
-    const [formExpenses, setFormExpenses] = useState(budget?.expenses || 0);
+    const formExpenses = (
+        bills
+        ? Object.keys(bills).reduce((acc, cur) => acc + bills[cur].amount, 0)
+        : undefined
+    )
 
-    const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormIncome(Number(e.target.value));
-    };
+    const formSavings = (
+        typeof formIncome !== 'undefined' && typeof formExpenses !== 'undefined'
+        ? formIncome - formExpenses
+        : undefined
+    )
 
-    const handleExpensesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormExpenses(Number(e.target.value));
-    };
-
-    const handleSave = () => {
-        setBudget({ income: formIncome, expenses: formExpenses })
-    };
+    const savingsClassNames = (
+        typeof formSavings !== 'undefined'
+        ? (
+            formSavings > 0
+            ? (
+                "text-green"
+            ) : (
+                formSavings < 0
+                ? (
+                    "text-red"
+                ) : ""
+            )
+        ) : ""
+    )
 
     return (
         <div>
-            <div>
-                <label>
-                    Income:
-                    <input type="number" value={formIncome} onChange={handleIncomeChange} />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Expenses:
-                    <input type="number" value={formExpenses} onChange={handleExpensesChange} />
-                </label>
-            </div>
-            <div>
-                <Button onClick={handleSave}>Save Budget</Button>
-            </div>
-            <h3>Savings: {formIncome - formExpenses}</h3>
+            <table className="table">
+                <tbody>
+                    <tr>
+                        <td><Link to='/revenues'>Income</Link></td>
+                        <td>{formIncome}</td>
+                    </tr>
+                    <tr>
+                        <td><Link to='/bills'>Expenses</Link></td>
+                        <td>{formExpenses}</td>
+                    </tr>
+                    <tr>
+                        <td>Savings</td>
+                        <td><span className={savingsClassNames}>{formSavings}</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     );
 };

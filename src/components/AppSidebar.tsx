@@ -36,7 +36,6 @@ const sidebarOrder = [
   "/events",
   "/reminders",
   "/schedule",
-  "/projection",
   "/jobLeads",
   "/jobs",
   "/meals"

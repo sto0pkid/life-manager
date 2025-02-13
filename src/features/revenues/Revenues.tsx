@@ -32,66 +32,70 @@ const Revenues: React.FC = () => {
     return (
         <div>
             <table className="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>
-                        <input
-                            className="input input-bordered"
-                            type="text"
-                            placeholder="Name"
-                            value={newRevenue.name}
-                            onChange={(e) => setNewRevenue({ ...newRevenue, name: e.target.value })}
-                        />
-                    </td>
-                    <td>
-                        <input
-                            className="input input-bordered"
-                            type="number"
-                            placeholder="Amount"
-                            value={newRevenue.amount}
-                            onChange={(e) => setNewRevenue({ ...newRevenue, amount: Number(e.target.value) })}
-                        />
-                    </td>
-                    <td>
-                        <input
-                            className="input input-bordered"
-                            type="date"
-                            value={newRevenue.date}
-                            onChange={(e) => setNewRevenue({ ...newRevenue, date: e.target.value })}
-                        />
-                    </td>
-                    <td>
-                        <button className="btn btn-primary" onClick={handleAddRevenue}>Add Revenue</button>
-                    </td>
-                </tr>
-                {formRevenues.map((revenue, index) => (
-                    <tr key={index}>
-                        <td>{revenue.name}</td>
-                        <td>{revenue.amount}</td>
-                        <td>{revenue.date}</td>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
                         <td>
-                            <button
-                                className="btn btn-secondary"
-                                onClick={() => handleRemoveRevenue(revenue.id)}
-                            >
-                                Remove
-                            </button>
+                            <input
+                                className="input input-bordered"
+                                type="text"
+                                placeholder="Name"
+                                value={newRevenue.name}
+                                onChange={(e) => setNewRevenue({ ...newRevenue, name: e.target.value })}
+                            />
+                        </td>
+                        <td>
+                            <input
+                                className="input input-bordered"
+                                type="number"
+                                placeholder="Amount"
+                                value={newRevenue.amount}
+                                onChange={(e) => setNewRevenue({ ...newRevenue, amount: Number(e.target.value) })}
+                            />
+                        </td>
+                        <td>
+                            <input
+                                className="input input-bordered"
+                                type="date"
+                                value={newRevenue.date}
+                                onChange={(e) => setNewRevenue({ ...newRevenue, date: e.target.value })}
+                            />
+                        </td>
+                        <td>
+                            <button className="btn btn-primary" onClick={handleAddRevenue}>Add Revenue</button>
                         </td>
                     </tr>
-                ))}
-                <tr>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        {totalRevenue}
-                    </th>
-                </tr>
+                    {formRevenues.map((revenue, index) => (
+                        <tr key={index}>
+                            <td>{revenue.name}</td>
+                            <td>{revenue.amount}</td>
+                            <td>{revenue.date}</td>
+                            <td>
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => handleRemoveRevenue(revenue.id)}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            {totalRevenue}
+                        </th>
+                    </tr>
+                </tbody>
             </table>
         </div>
     );

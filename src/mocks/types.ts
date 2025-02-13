@@ -9,6 +9,7 @@ import { Reminder } from '../features/reminders/remindersMockTypes'
 import { JobLead } from '../features/jobLeads/jobLeadsMockTypes'
 import { JobApplication } from '../features/jobs/jobsMockTypes'
 import { Meal, Recipe } from '../features/meals/types'
+import { Goal } from '../features/planning/types'
 
 export interface Data {
     bills: {
@@ -42,5 +43,8 @@ export interface Data {
     },
     recipes: {
         [key: string]: Recipe
+    },
+    goals: {
+        [key: string]: Goal
     }
 }
