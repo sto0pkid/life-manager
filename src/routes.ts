@@ -96,7 +96,6 @@ export const routeOrder = [
     "/events",
     "/reminders",
     "/schedule",
-    "/projection",
     "/jobLeads",
     "/jobs",
     "/meals"
