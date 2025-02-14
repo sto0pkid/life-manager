@@ -189,5 +189,39 @@
                 }
             ]
         }
+    },
+    "graph": {
+        "bySubject": {
+            "start": [
+                ["start", "p", "o"],
+                ["start", "p", "o2"],
+                ["start", "p", "o3"]
+            ],
+            "s": [
+                ["s", "p2", "start"]
+            ],
+            "s2": [
+                ["s2", "p2", "start"]
+            ],
+            "s3": [
+                ["s3", "p3", "start"]
+            ]
+        },
+        "byObject": {
+            "start": [
+                ["s", "p2", "start"],
+                ["s2", "p2", "start"],
+                ["s3", "p3", "start"]
+            ],
+            "o": [
+                ["start", "p", "o"]
+            ],
+            "o2": [
+                ["start", "p", "o2"]
+            ],
+            "o3": [
+                ["start", "p", "o3"]
+            ]
+        }
     }
 }

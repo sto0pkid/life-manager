@@ -3,6 +3,7 @@ import { Routes, Route} from 'react-router'
 
 import { routes, routeOrder } from './routes'
 import Layout from './Layout'
+import {GraphRouteView} from './features/graph/Graph';
 
 
 const App: React.FC = () => {
@@ -17,6 +18,7 @@ const App: React.FC = () => {
                                 return <Route key={path} path={path} element={<Component />}/>
                             })
                         }
+                        <Route key={'graph'} path={'/graph/get/:node'} element={<GraphRouteView/>}/>
                     </>
                 </Routes>
             </div>

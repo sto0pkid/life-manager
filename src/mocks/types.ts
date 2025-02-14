@@ -46,5 +46,13 @@ export interface Data {
     },
     goals: {
         [key: string]: Goal
+    },
+    graph: {
+        bySubject: {
+            [key:string] : string[][]
+        },
+        byObject: {
+            [key:string] : string[][]
+        }
     }
 }

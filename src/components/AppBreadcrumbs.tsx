@@ -12,6 +12,15 @@ import { routes } from '../routes'
 
 export const AppBreadcrumbs = () => {
     const location = useLocation()
+    const pageName = (
+       routes[location.pathname]
+       ? routes[location.pathname].name
+       : (
+        location.pathname.startsWith('/graph')
+        ? 'Graph'
+        : ''
+       )
+    )
 
     return (
         <Breadcrumb>
@@ -23,7 +32,7 @@ export const AppBreadcrumbs = () => {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                    <BreadcrumbPage>{routes[location.pathname].name}</BreadcrumbPage>
+                    <BreadcrumbPage>{pageName}</BreadcrumbPage>
                 </BreadcrumbItem>
             </BreadcrumbList>
         </Breadcrumb>

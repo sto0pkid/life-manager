@@ -41,7 +41,7 @@ To get started with the Life Management App, follow these steps:
    npm install
    ```
 
-4. **Run the application**:
+4. **Run the application in dev mode**:
    ```
    npm run dev
    ```

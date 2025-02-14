@@ -14,6 +14,7 @@ import JobLeads from './features/jobLeads/JobLeads';
 import Jobs from './features/jobs/Jobs';
 import Meals from './features/meals/Meals';
 import React from 'react';
+import GraphView from './features/graph/Graph';
 
 
 export const routes: {
@@ -81,6 +82,10 @@ export const routes: {
     "/meals": {
         name: "Meals",
         component: Meals
+    },
+    "/graph": {
+        name: "Graph",
+        component: () => {return GraphView({node: 'start', view: 'default'})}
     }
 }
 
@@ -98,5 +103,5 @@ export const routeOrder = [
     "/schedule",
     "/jobLeads",
     "/jobs",
-    "/meals"
+    "/meals",
 ]

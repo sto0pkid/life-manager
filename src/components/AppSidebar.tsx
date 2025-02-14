@@ -38,7 +38,7 @@ const sidebarOrder = [
   "/schedule",
   "/jobLeads",
   "/jobs",
-  "/meals"
+  "/meals",
 ]
 
 // This is sample data.
@@ -58,7 +58,10 @@ const data = {
       url: "#",
       icon: SquareTerminal,
       isActive: true,
-      items: sidebarOrder.map(path => ({title: routes[path].name, url: path}))
+      items: [
+        ...sidebarOrder.map(path => ({title: routes[path].name, url: path})),
+        {title: 'Graph', url: '/graph/get/start'}
+      ]
     },
   ],
   projects: [

@@ -14,6 +14,8 @@ import {} from './features/events/eventsAPI'
 import {} from './features/reminders/remindersAPI'
 import {} from './features/jobLeads/jobLeadsAPI'
 import {} from './features/jobs/jobsAPI'
+import {} from './features/planning/api'
+import {} from './features/graph/api'
 
 const store = configureStore({
   reducer: {
