@@ -191,6 +191,14 @@
         }
     },
     "graph": {
+        "triples": [
+            ["start", "p", "o"],
+            ["start", "p", "o2"],
+            ["start", "p", "o3"],
+            ["s", "p2", "start"],
+            ["s2", "p2", "start"],
+            ["s3", "p3", "start"]
+        ],
         "bySubject": {
             "start": [
                 ["start", "p", "o"],

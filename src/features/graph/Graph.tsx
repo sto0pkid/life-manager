@@ -1,52 +1,19 @@
 import React from "react";
-import { useGetEdgesQuery } from './api'
-import { Link, useParams } from "react-router";
+import {
+    useGetEdgesQuery,
+    useInsertTriplesMutation,
+    useRemoveTriplesMutation
+} from './api'
+import { useParams } from "react-router";
+import { Triple } from '../../lib/types'
+import { ViewType } from './types'
+import GraphNavigator from "./GraphNavigator";
 
-type Triple = [string, string, string]
+const DefaultView = GraphNavigator
 
-const TriplesTable : React.FC<{
-    triples: Triple[]
-}> = ({
-    triples
-}) => {
-    return (
-        <table className="table">
-            <tbody>
-                <>
-                {
-                    triples.map(([s,p,o] : Triple, index) => (
-                        <tr key={index}>
-                            <td><Link to={`/graph/get/${s}`}>{s}</Link></td>
-                            <td>{p}</td>
-                            <td><Link to={`/graph/get/${o}`}>{o}</Link></td>
-                        </tr>
-                    ))
-                }
-                </>
-            </tbody>
-        </table>
-    )
-}
 
-const DefaultView : React.FC<{
-    triples: {
-        in: Triple[],
-        out: Triple[]
-    }
-}> = ({
-    triples
-}) => {
-    return (
-        <div>
-            <h2>In</h2>
-            <TriplesTable triples={triples.in}/>
-            <h2>Out</h2>
-            <TriplesTable triples={triples.out}/>
-        </div>
-    )
-}
 
-const views : {[key:string] : React.FC<{triples:{in:Triple[], out:Triple[]}}>}= {
+const views : {[key:string] : React.FC<ViewType>}= {
     default: DefaultView
 }
 
@@ -58,13 +25,32 @@ const GraphView : React.FC<{
     view = 'default'
 }) => {
     const { data : nodeData } = useGetEdgesQuery(node)
-    const Component : React.FC<{triples:{in:Triple[], out:Triple[]}}> = views[view]
+    const [ insertTriples ] = useInsertTriplesMutation()
+    const [ removeTriples ] = useRemoveTriplesMutation()
+
+    const handleAddTriple = (t : Triple) => {
+        insertTriples([t])
+    }
+
+    const handleRemoveTriple = (t : Triple) => {
+        removeTriples([t])
+    }
+
+    const Component  = views[view]
     return (
         <div>
             {
                 nodeData
-                ? <Component triples={nodeData}/>
-                : <span className="loading loading-spinner loading-md"></span>
+                ? (
+                    <Component
+                        node={node}
+                        triples={nodeData}
+                        onSubmitAddTriple={handleAddTriple}
+                        onRemoveTriple={handleRemoveTriple}
+                    />
+                ) : (
+                    <span className="loading loading-spinner loading-md"></span>
+                )
             }
         </div>       
     )

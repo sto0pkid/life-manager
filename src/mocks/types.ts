@@ -10,6 +10,7 @@ import { JobLead } from '../features/jobLeads/jobLeadsMockTypes'
 import { JobApplication } from '../features/jobs/jobsMockTypes'
 import { Meal, Recipe } from '../features/meals/types'
 import { Goal } from '../features/planning/types'
+import { Triple } from '../lib/types'
 
 export interface Data {
     bills: {
@@ -48,11 +49,12 @@ export interface Data {
         [key: string]: Goal
     },
     graph: {
+        triples: Triple[],
         bySubject: {
-            [key:string] : string[][]
+            [key:string] : Triple[]
         },
         byObject: {
-            [key:string] : string[][]
+            [key:string] : Triple[]
         }
     }
 }

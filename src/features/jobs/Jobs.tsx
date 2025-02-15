@@ -117,9 +117,6 @@ const Jobs : React.FC = () => {
                                 placeholder="Date Posted"
                                 value={datePosted?.toLocaleDateString()}
                                 onChange={(e) => {
-                                    console.log(e.target.value)
-                                    const date = new Date(e.target.value)
-                                    console.log(date)
                                     setDatePosted(new Date(Date.parse(e.target.value)))
                                 }}
                             />

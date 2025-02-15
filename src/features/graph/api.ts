@@ -7,6 +7,13 @@ const graphApi = baseApi
     .enhanceEndpoints({addTagTypes: ['Graph']})
     .injectEndpoints({
         endpoints: (builder) => ({
+            getAllEdges: builder.query<Triple[],void>({
+                query: () => `${GRAPH_API_ENDPOINT}/all`,
+                providesTags: () => [
+                    { type : 'All' },
+                    { type : 'Graph', id: 'LIST'}
+                ]
+            }),
             getEdges: builder.query<{in:Triple[],out:Triple[]}, string>({
                 query: (id) => `${GRAPH_API_ENDPOINT}/get/${id}`,
                 providesTags: (_result, _error, arg) => [
@@ -21,6 +28,7 @@ const graphApi = baseApi
                     body: { data : triples }
                 }),
                 invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Graph', id: 'LIST' },
                     ...arg.map(([s]) => ({ type : 'Graph' as const, id : s})),
                     ...arg.map(([_s,_p,o]) => ({ type : 'Graph' as const, id : o}))
                 ]
@@ -32,6 +40,7 @@ const graphApi = baseApi
                     body: { data : triples }
                 }),
                 invalidatesTags: (_result, _error, arg) => [
+                    { type : 'Graph', id: 'LIST' },
                     ...arg.map(([s]) => ({ type : 'Graph' as const, id : s})),
                     ...arg.map(([_s,_p,o]) => ({ type : 'Graph' as const, id : o}))
                 ]
@@ -40,6 +49,7 @@ const graphApi = baseApi
     })
 
 export const {
+    useGetAllEdgesQuery,
     useGetEdgesQuery,
     useInsertTriplesMutation,
     useRemoveTriplesMutation

@@ -4,6 +4,7 @@ import { Routes, Route} from 'react-router'
 import { routes, routeOrder } from './routes'
 import Layout from './Layout'
 import {GraphRouteView} from './features/graph/Graph';
+import GraphList from './features/graph/GraphList';
 
 
 const App: React.FC = () => {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                             })
                         }
                         <Route key={'graph'} path={'/graph/get/:node'} element={<GraphRouteView/>}/>
+                        <Route key={'graph_all'} path={'/graph/all'} element={<GraphList/>}/> 
                     </>
                 </Routes>
             </div>

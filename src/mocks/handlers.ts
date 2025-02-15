@@ -19,7 +19,69 @@ import { graphHandlers } from '@/features/graph/mock'
 import sampleData from './data.json'
 import { Data } from './types'
 
-const data : Data = sampleData as Data
+function checkData(
+    data : {
+        graph: {
+            triples: string[][],
+            bySubject: {[key:string]: string[][]},
+            byObject: {[key:string]: string[][]}
+        }
+    }
+) : data is Data {
+    data.graph.triples.forEach(t => {
+        if(t.length !== 3){
+            return false
+        }
+    })
+    Object.keys(data.graph.bySubject).forEach(s => {
+        data.graph.bySubject[s].forEach(t => {
+            if(t.length !== 3){
+                return false
+            }
+        })
+    })
+    Object.keys(data.graph.byObject).forEach(o => {
+        data.graph.byObject[o].forEach(t => {
+            if(t.length !== 3){
+                return false
+            }
+        })
+    })
+    return true
+}
+
+const freshKB = () : Data => {
+    return {
+        bills: {},
+        budget: {
+            income: 0,
+            expenses: 0
+        },
+        revenues: {},
+        health: {
+            weight: 0,
+            height: 0,
+            bloodPressure: '',
+            heartRate: 0
+        },
+        fitness: {},
+        hobbies: {},
+        reminders: {},
+        events: {},
+        jobLeads: {},
+        jobs: {},
+        meals: {},
+        recipes: {},
+        goals: {},
+        graph: {
+            triples: [],
+            bySubject: {},
+            byObject: {}
+        }
+    }
+}
+
+const data : Data = checkData(sampleData) ? sampleData : freshKB()
 
 
 export const handlers = [
