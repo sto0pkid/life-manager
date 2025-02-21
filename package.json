@@ -1,6 +1,6 @@
 {
   "name": "life-management-app",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A web application for managing various aspects of life including budget, bills, health, and more.",
   "main": "src/index.tsx",
   "scripts": {

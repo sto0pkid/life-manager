@@ -46,6 +46,12 @@ To get started with the Life Management App, follow these steps:
    npm run dev
    ```
 
+5. **Connect with API backend & preview**
+   ```
+   VITE_API_URL={api url} npm run build
+   vite preview
+   ```
+
 ## Technologies Used
 
 - **vite**
@@ -65,7 +71,3 @@ To get started with the Life Management App, follow these steps:
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.

@@ -6,7 +6,6 @@ import Layout from './Layout'
 import {GraphRouteView} from './features/graph/Graph';
 import GraphList from './features/graph/GraphList';
 
-
 const App: React.FC = () => {
     return (
         <Layout>

@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/sidebar"
 import React from "react"
 import { BrowserRouter } from 'react-router'
-import { useLocation } from 'react-router-dom';
 
 
 const Layout : React.FC<{
